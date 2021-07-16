@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+//import bootstrap components
 import {
   Container,
   Row,
@@ -9,13 +10,22 @@ import {
   Button,
   Image,
 } from 'react-bootstrap'
+
+//import hooks
 import useRouter from 'hooks/useRouter'
 import { useProvideAuth } from 'hooks/useAuth'
+
+//import components
 import { LandingHeader, LoadingSpinner } from 'components'
+
+//import context
 import { setAuthToken } from 'utils/axiosConfig'
+
+//import libraries
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
+//set avatars
 const avatars = {
   bird: 'bird.svg',
   dog: 'dog.svg',
@@ -27,6 +37,7 @@ const avatars = {
   tiger: 'tiger.svg',
 }
 
+// initial state
 const initialState = {
   username: '',
   password: '',
@@ -35,6 +46,7 @@ const initialState = {
   errorMessage: null,
 }
 
+//main export function
 export default function RegisterPage() {
   const [data, setData] = useState(initialState)
   const auth = useProvideAuth()
