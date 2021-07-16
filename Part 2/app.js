@@ -33,7 +33,7 @@ mongoose.connection.on('error', (err) => {
 
 const app = express()
 
-// middleware
+// intialize middleware
 app.use(logger('dev'))
 app.use(cors())
 app.use(express.json())
