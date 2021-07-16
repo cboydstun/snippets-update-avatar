@@ -49,6 +49,7 @@ export default function RegisterPage() {
     })
   }
 
+  //file change function
   const fileChangeHandler = async (event) => {
     const uploadedAvatar = new FormData()
     uploadedAvatar.append('avatar', event.target.files[0])
@@ -163,11 +164,17 @@ export default function RegisterPage() {
                   </Form.Row>
                 </Col>
               </Form.Row>
+
+
+            {/* FILE UPLOAD HERE */}
               <input
                 type='file'
                 name='profile_image'
                 onChange={fileChangeHandler}
               />
+            {/* ^^^^^^^^ FILE UPLOAD ABOVE ^^^^^^^^ */}
+
+
             </Form.Group>
             <Form.Group>
               <Form.Label htmlFor='Register'>Password</Form.Label>

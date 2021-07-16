@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+
+//import bootstrap components
 import {
   Container,
   Card,
@@ -8,12 +10,19 @@ import {
   Col,
   Image,
 } from 'react-bootstrap'
+
+//import components
 import { LoadingSpinner, Post } from 'components'
+
+//import hooks
 import { useProvideAuth } from 'hooks/useAuth'
 import { useRequireAuth } from 'hooks/useRequireAuth'
+
+//import libraries
 import axios from 'utils/axiosConfig.js'
 import { toast } from 'react-toastify'
 
+//set avatars
 const avatars = {
   bird: '../../bird.svg',
   dog: '../../dog.svg',
@@ -25,12 +34,14 @@ const avatars = {
   tiger: '../../tiger.svg',
 }
 
+//main export function
 export default function UserDetailPage({
   match: {
     params: { uid },
   },
   history,
 }) {
+    //initial state
   const { state } = useProvideAuth()
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
@@ -47,6 +58,7 @@ export default function UserDetailPage({
   } = useRequireAuth()
   const { signout } = useProvideAuth()
 
+  //file change function
   const fileChangeHandler = async (event) => {
     const uploadedAvatar = new FormData()
     uploadedAvatar.append('avatar', event.target.files[0])
@@ -68,6 +80,7 @@ export default function UserDetailPage({
     }
   }
 
+  //axios fetch
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -81,6 +94,7 @@ export default function UserDetailPage({
     isAuthenticated && getUser()
   }, [uid, isAuthenticated])
 
+  //update data if a picture is involved, if not then just use default value
   const handleInputChange = (event) => {
     setData({
       ...data,
@@ -90,6 +104,7 @@ export default function UserDetailPage({
     })
   }
 
+  //update avatar function
   const handleUpdateAvatar = async (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -125,6 +140,7 @@ export default function UserDetailPage({
     }
   }
 
+  //update password
   const handleUpdateAccount = async (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -254,6 +270,7 @@ export default function UserDetailPage({
                       {data.errorMessage && (
                         <span className='form-error'>{data.errorMessage}</span>
                       )}
+
                       
                         {/* FILE UPLOAD HERE */}
                         <input
@@ -262,7 +279,7 @@ export default function UserDetailPage({
                           onChange={fileChangeHandler}
                           placeholder="Click"
                         />
-
+                        {/* ^^^^^^^^ FILE UPLOAD ABOVE ^^^^^^^^ */}
                       
                       <Button type='submit' disabled={data.isSubmitting}>
                         {data.isSubmitting ? (
