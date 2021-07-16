@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+
+//import bootstrap components
 import {
   Container,
   Card,
@@ -8,12 +10,19 @@ import {
   Col,
   Image,
 } from 'react-bootstrap'
+
+//import components
 import { LoadingSpinner, Post } from 'components'
+
+//import hooks
 import { useProvideAuth } from 'hooks/useAuth'
 import { useRequireAuth } from 'hooks/useRequireAuth'
+
+//import utils
 import axios from 'utils/axiosConfig.js'
 import { toast } from 'react-toastify'
 
+//set avatars
 const avatars = {
   bird: '../../bird.svg',
   dog: '../../dog.svg',
@@ -36,16 +45,21 @@ export default function UserDetailPage({
   const [loading, setLoading] = useState(true)
   const [validated, setValidated] = useState(false)
   const [open, setOpen] = useState(false)
+
+  //initial state
   const [data, setData] = useState({
     password: '',
     profile_image: '',
     isSubmitting: false,
     errorMessage: null,
   })
+
+  //context auth
   const {
     state: { isAuthenticated },
   } = useRequireAuth()
 
+  //show data if authenicated
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -59,6 +73,7 @@ export default function UserDetailPage({
     isAuthenticated && getUser()
   }, [uid, isAuthenticated])
 
+  //handle data change when selecting avatar
   const handleInputChange = (event) => {
     setData({
       ...data,
@@ -68,6 +83,7 @@ export default function UserDetailPage({
     })
   }
 
+  //function to update avatar
   const handleUpdateAvatar = async (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -105,6 +121,7 @@ export default function UserDetailPage({
     }
   }
 
+  //function to update account parameters
   const handleUpdateAccount = async (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -198,6 +215,8 @@ export default function UserDetailPage({
                     <Form
                       onSubmit={handleUpdateAvatar}
                     >
+
+                      {/* AVATAR SELECTOR */}
                       <Form.Group>
                         <Form.Row>
                           <Col>
@@ -228,6 +247,7 @@ export default function UserDetailPage({
                           </Col>
                         </Form.Row>
                       </Form.Group>
+
                       {data.errorMessage && (
                         <span className='form-error'>{data.errorMessage}</span>
                       )}

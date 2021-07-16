@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+
+//import bootstrap components
 import {
   Container,
   Row,
@@ -8,11 +10,18 @@ import {
   Button,
   Image,
 } from 'react-bootstrap'
+
+//import hooks
 import useRouter from 'hooks/useRouter'
 import { useProvideAuth } from 'hooks/useAuth'
+
+//import components
 import { LandingHeader, LoadingSpinner } from 'components'
+
+//import utilties
 import { setAuthToken } from 'utils/axiosConfig'
 
+//set avatars
 const avatars = {
   bird: 'bird.svg',
   dog: 'dog.svg',
@@ -24,6 +33,7 @@ const avatars = {
   tiger: 'tiger.svg',
 }
 
+//set initial state
 const initialState = {
   username: '',
   password: '',
@@ -33,10 +43,14 @@ const initialState = {
 }
 
 export default function RegisterPage() {
+  //slice of state
   const [data, setData] = useState(initialState)
+  //context
   const auth = useProvideAuth()
+  //router
   const router = useRouter()
 
+  //function to handle data change
   const handleInputChange = (event) => {
     setData({
       ...data,
@@ -46,6 +60,7 @@ export default function RegisterPage() {
     })
   }
 
+  //function to handle register
   const handleSignup = async (event) => {
     const form = event.currentTarget
     event.preventDefault()
@@ -59,6 +74,8 @@ export default function RegisterPage() {
       isSubmitting: true,
       errorMessage: null,
     })
+
+    //perform async action with trycatch block
     try {
       const res = await auth.signup(data.username, data.password, data.profile_image)
       setData({
@@ -77,6 +94,7 @@ export default function RegisterPage() {
     }
   }
 
+  //render
   return (
     <div style={{overflow: "auto", height: "100vh"}}>
       <LandingHeader/>
@@ -106,6 +124,20 @@ export default function RegisterPage() {
                     />
                 </InputGroup>
                 </Form.Group>
+
+                <Form.Group>
+                <Form.Label htmlFor='Register'>Password</Form.Label>
+                <Form.Control
+                    type='password'
+                    name='password'
+                    required
+                    id='inputPasswordRegister'
+                    value={data.password}
+                    onChange={handleInputChange}
+                />
+                </Form.Group>
+
+                {/* AVATAR SELECTOR */}
                 <Form.Group>
                   <Form.Row>
                     <Col>
@@ -134,17 +166,7 @@ export default function RegisterPage() {
                     </Col>
                   </Form.Row>
                 </Form.Group>
-                <Form.Group>
-                <Form.Label htmlFor='Register'>Password</Form.Label>
-                <Form.Control
-                    type='password'
-                    name='password'
-                    required
-                    id='inputPasswordRegister'
-                    value={data.password}
-                    onChange={handleInputChange}
-                />
-                </Form.Group>
+
                 {data.errorMessage && (
                 <span className='form-error text-warning'>{data.errorMessage}</span>
                 )}
